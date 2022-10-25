@@ -1,4 +1,5 @@
-﻿using ECommerceApp.BL.DTOs.AuthDTOs;
+﻿using AutoMapper;
+using ECommerceApp.BL.DTOs.AuthDTOs;
 using ECommerceApp.BL.Helpers;
 using ECommerceApp.DAL.Data.Models;
 using Microsoft.AspNetCore.Identity;
@@ -19,10 +20,12 @@ namespace ECommerceApp.BL.Managers.AuthManager
         //Implementing user login and user regesteration
         private UserManager<User> _usermanager;
         private IConfiguration _config;
-        public AuthenticationManager(UserManager<User> usermanager,IConfiguration config)
+        private readonly IMapper _mapper;
+        public AuthenticationManager(UserManager<User> usermanager,IConfiguration config,IMapper mapper)
         {
             _usermanager = usermanager;
             _config = config;
+            _mapper = mapper;
         }
 
         public string GenerateToken(IEnumerable<Claim> myClaims, SigningCredentials credentials)
@@ -56,13 +59,14 @@ namespace ECommerceApp.BL.Managers.AuthManager
         public async Task<UserReadDto> RegisterNewUSer(RegisterDto model)
         {
             UserReadDto? myUserData = new UserReadDto();
-            User user = new User { 
-                Email = model.Email,
-                FirstName= model.FirstName,
-                LastName= model.LastName,
-                UserName= model.UserName,
-                PhoneNumber=model.MobileNumber
-            };
+            //User user = new User { 
+            //    Email = model.Email,
+            //    FirstName= model.FirstName,
+            //    LastName= model.LastName,
+            //    UserName= model.UserName,
+            //    PhoneNumber=model.MobileNumber
+            //};
+            User user = _mapper.Map<User>(model);
             var createdUser = await _usermanager.CreateAsync(user,model.Password);
             if(!createdUser.Succeeded)
             {

@@ -1,6 +1,12 @@
+using ECommerceApp.BL.AutoMapper;
+using ECommerceApp.BL.Helpers;
+using ECommerceApp.BL.Managers.AuthManager;
 using ECommerceApp.DAL.Data.Context;
+using ECommerceApp.DAL.Data.Models;
 using ECommerceApp.DAL.Repository.NonGeneric.User_NonGeneric;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ECommerceApp.API
 {
@@ -22,6 +28,45 @@ namespace ECommerceApp.API
             builder.Services.AddScoped<IUserRepository,UserRepository>();
             #endregion
 
+            #region Auto mapper configs
+            builder.Services.AddAutoMapper(typeof(AutoMapperProfiler).Assembly);
+            #endregion
+
+            #region MAnager configs
+            builder.Services.AddSingleton<IAuthenticationManager, AuthenticationManager>();
+            #endregion
+
+            #region Identity usermanager configuration
+            builder.Services.AddIdentity<User, IdentityRole>(options =>
+            {
+                options.User.RequireUniqueEmail = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
+            #endregion
+            //To inject iConfiguration
+            builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+
+            #region Authentication Configs
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "Default";
+                options.DefaultChallengeScheme = "Default";
+            }).AddJwtBearer("Default", options =>
+            {
+                SymmetricSecurityKey key = JWT.getKey(builder.Configuration);
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = key,
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+            #endregion
+
+
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -38,6 +83,7 @@ namespace ECommerceApp.API
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

@@ -12,7 +12,7 @@ namespace ECommerceApp.BL.Helpers
     {
         public static SigningCredentials getCredentials(IConfiguration _config)
         {
-            String SecretKey = _config.GetValue<string>("SecretKey");
+            String SecretKey = _config.GetValue<string>("SecurityKey");
             byte[] KeyInBytes = Encoding.ASCII.GetBytes(SecretKey);
             SymmetricSecurityKey key = new SymmetricSecurityKey(KeyInBytes);
             SigningCredentials signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -20,7 +20,7 @@ namespace ECommerceApp.BL.Helpers
         }
         public static SymmetricSecurityKey getKey(IConfiguration _config)
         {
-            String SecretKey = _config.GetValue<string>("SecretKey");
+            String SecretKey = _config.GetValue<string>("SecurityKey");
             byte[] KeyInBytes = Encoding.ASCII.GetBytes(SecretKey);
             SymmetricSecurityKey key = new SymmetricSecurityKey(KeyInBytes);
             return key;
