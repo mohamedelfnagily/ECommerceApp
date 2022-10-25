@@ -16,7 +16,7 @@ namespace ECommerceApp.DAL.Data.Models
         [Required]
         [StringLength(20, ErrorMessage = "Maximum length 20 characters")]
         public string LastName { get; set; } = "";
-        //public byte[]? Image { get; set; }
+        public byte[]? Image { get; set; }
 
     }
 }
