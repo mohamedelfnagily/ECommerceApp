@@ -96,10 +96,10 @@ namespace ECommerceApp.DAL.Repository.Generic
             return myEntites;
         }
         //Update Section:
+        //This method will be empty as EntityFrameworkCore track all changes occurs on the entity
+        //But it is implemented regarding any Change in the future
         public TEntity Update(TEntity entity)
         {
-            //This method will be empty as EntityFrameworkCore track all changes occurs on the entity
-            //But it is implemented regarding any Change in the future
             return entity;
         }
     }

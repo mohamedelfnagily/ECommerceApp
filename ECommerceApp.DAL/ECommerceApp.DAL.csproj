@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repository\NonGeneric\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="microsoft.aspnetcore.identity" Version="2.2.0" />
     <PackageReference Include="microsoft.aspnetcore.identity.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
@@ -19,6 +15,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Repository\NonGeneric\Cart-NonGeneric\" />
+    <Folder Include="Repository\NonGeneric\Product-NonGeneric\" />
+    <Folder Include="Repository\NonGeneric\Order-NonGeneric\" />
   </ItemGroup>
 
 </Project>

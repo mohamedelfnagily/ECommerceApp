@@ -1,4 +1,5 @@
 using ECommerceApp.DAL.Data.Context;
+using ECommerceApp.DAL.Repository.NonGeneric.User_NonGeneric;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerceApp.API
@@ -15,6 +16,10 @@ namespace ECommerceApp.API
             {
                 opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            #endregion
+
+            #region Base Classes 
+            builder.Services.AddScoped<IUserRepository,UserRepository>();
             #endregion
 
             builder.Services.AddControllers();
