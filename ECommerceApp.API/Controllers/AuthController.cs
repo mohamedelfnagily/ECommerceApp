@@ -18,9 +18,9 @@ namespace ECommerceApp.API.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public ActionResult Register(RegisterDto model)
+        public async Task<ActionResult> Register(RegisterDto model)
         {
-            var userData = _manager.RegisterNewUSer(model);
+            var userData =await _manager.RegisterNewUSer(model);
             if(userData==null)
             {
                 return BadRequest();
@@ -30,9 +30,9 @@ namespace ECommerceApp.API.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public ActionResult Login(LoginDto model)
+        public async Task<ActionResult> Login(LoginDto model)
         {
-            var userData = _manager.LoginUser(model);
+            var userData =await _manager.LoginUser(model);
             if (userData == null)
             {
                 return BadRequest();

@@ -59,13 +59,6 @@ namespace ECommerceApp.BL.Managers.AuthManager
         public async Task<UserReadDto> RegisterNewUSer(RegisterDto model)
         {
             UserReadDto? myUserData = new UserReadDto();
-            //User user = new User { 
-            //    Email = model.Email,
-            //    FirstName= model.FirstName,
-            //    LastName= model.LastName,
-            //    UserName= model.UserName,
-            //    PhoneNumber=model.MobileNumber
-            //};
             User user = _mapper.Map<User>(model);
             var createdUser = await _usermanager.CreateAsync(user,model.Password);
             if(!createdUser.Succeeded)

@@ -33,7 +33,7 @@ namespace ECommerceApp.API
             #endregion
 
             #region MAnager configs
-            builder.Services.AddSingleton<IAuthenticationManager, AuthenticationManager>();
+            builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
             #endregion
 
             #region Identity usermanager configuration
