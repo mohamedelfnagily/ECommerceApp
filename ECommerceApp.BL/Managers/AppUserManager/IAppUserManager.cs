@@ -16,5 +16,11 @@ namespace ECommerceApp.BL.Managers.AppUserManager
         Task<AppUserReadDto> GetUserByEmail(string email);
         Task<AppUserReadDto> GetUserByUsername(string username);
         Task<IEnumerable<AppUserReadDto>> GetAllUsers();
+        //Adding new user
+        Task<AppUserReadDto> AddNewUser(AppUserAddDto model);
+        //Deleting user
+        Task<AppUserReadDto> DeleteUser(string id);
+        //update existing user
+        Task<AppUserReadDto> UpdateUser(AppUserUpdateDto model,string id);
     }
 }

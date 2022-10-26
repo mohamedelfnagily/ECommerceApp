@@ -62,5 +62,42 @@ namespace ECommerceApp.API.Controllers
             }
             return Ok(myUser);
         }
+
+        //Adding new user by the admin
+        [HttpPost]
+        [Route("AddUser")]
+        public async Task<ActionResult> AddUser(AppUserAddDto model)
+        {
+            AppUserReadDto myUser =await  _appUserManager.AddNewUser(model);
+            if(myUser == null)
+            {
+                return BadRequest();
+            }
+            return Ok(myUser);
+        }
+        //Deleting Existing user
+        [HttpDelete]
+        [Route("DeleteUser")]
+        public async Task<ActionResult> DeleteUser(string id)
+        {
+            AppUserReadDto user = await _appUserManager.DeleteUser(id);
+            if(user==null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
+        //Updating Existing user
+        [HttpPut]
+        [Route("UpdateUser")]
+        public async Task<ActionResult> UpdateUser(AppUserUpdateDto model,string id)
+        {
+            AppUserReadDto user = await _appUserManager.UpdateUser(model,id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
     }
 }

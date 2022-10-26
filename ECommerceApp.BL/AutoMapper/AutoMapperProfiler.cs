@@ -25,6 +25,10 @@ namespace ECommerceApp.BL.AutoMapper
             CreateMap<CategoryUpdateDto, Category>();
             //Converting a user to urser read dto
             CreateMap<User, AppUserReadDto>();
+            //Converting from user add dto to user
+            CreateMap<AppUserAddDto, User>();
+            //Converting from update user dto to user
+            CreateMap<AppUserUpdateDto, User>();
         }
     }
 }
