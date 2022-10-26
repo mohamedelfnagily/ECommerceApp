@@ -102,5 +102,10 @@ namespace ECommerceApp.DAL.Repository.Generic
         {
             return entity;
         }
+        //Saving all changes
+        public void Save()
+        {
+            _context.SaveChanges();
+        }
     }
 }

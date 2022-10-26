@@ -28,6 +28,8 @@ namespace ECommerceApp.DAL.Repository.Generic
         IEnumerable<TEntity> DeleteRange(IEnumerable<Guid> Ids);
         //Updating Section
         TEntity Update(TEntity entity);
+        //Saving
+        void Save();
 
     }
 }

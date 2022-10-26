@@ -1,8 +1,11 @@
 using ECommerceApp.BL.AutoMapper;
 using ECommerceApp.BL.Helpers;
+using ECommerceApp.BL.Managers.AppUserManager;
 using ECommerceApp.BL.Managers.AuthManager;
+using ECommerceApp.BL.Managers.CategoryManager;
 using ECommerceApp.DAL.Data.Context;
 using ECommerceApp.DAL.Data.Models;
+using ECommerceApp.DAL.Repository.NonGeneric.Category_NonGeneric;
 using ECommerceApp.DAL.Repository.NonGeneric.User_NonGeneric;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +29,7 @@ namespace ECommerceApp.API
 
             #region Base Classes 
             builder.Services.AddScoped<IUserRepository,UserRepository>();
+            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             #endregion
 
             #region Auto mapper configs
@@ -34,6 +38,8 @@ namespace ECommerceApp.API
 
             #region MAnager configs
             builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
+            builder.Services.AddScoped<ICategoryManager, CategoryManager>();
+            builder.Services.AddScoped<IAppUserManager, AppUserManager>();
             #endregion
 
             #region Identity usermanager configuration
