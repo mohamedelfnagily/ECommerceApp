@@ -14,6 +14,7 @@ namespace ECommerceApp.BL.DTOs.AppUserDTOs
         public string UserName { get; set; } = "";
         public string PhoneNumber { get; set; } = "";
         public byte[] Image { get; set; }
+        public string Role { get; set; } = "";
 
     }
 }

@@ -2,6 +2,7 @@
 using ECommerceApp.BL.DTOs.AppUserDTOs;
 using ECommerceApp.DAL.Data.Models;
 using ECommerceApp.DAL.Repository.NonGeneric.User_NonGeneric;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,7 @@ namespace ECommerceApp.BL.Managers.AppUserManager
                 return null;
             }
             AppUserReadDto neededUser = _mapper.Map<AppUserReadDto>(user);
+            await GetRole(user, neededUser);
             return neededUser;
         }
 
@@ -45,6 +47,7 @@ namespace ECommerceApp.BL.Managers.AppUserManager
                 return null;
             }
             AppUserReadDto neededUser = _mapper.Map<AppUserReadDto>(user);
+            await GetRole(user, neededUser);
             return neededUser;
         }
 
@@ -56,6 +59,7 @@ namespace ECommerceApp.BL.Managers.AppUserManager
                 return null;
             }
             AppUserReadDto neededUser = _mapper.Map<AppUserReadDto>(user);
+            await GetRole(user, neededUser);
             return neededUser;
         }
 
@@ -67,6 +71,7 @@ namespace ECommerceApp.BL.Managers.AppUserManager
                 return null;
             }
             IEnumerable<AppUserReadDto> users = _mapper.Map<IEnumerable<AppUserReadDto>>(myUsers);
+            
             return users;
         }
         //Adding Section:
@@ -89,6 +94,7 @@ namespace ECommerceApp.BL.Managers.AppUserManager
             };
             var result = await _usermanager.AddClaimsAsync(myUser, claims);
             AppUserReadDto AddedUSer = _mapper.Map<AppUserReadDto>(myUser);
+            await GetRole(myUser, AddedUSer);
             return AddedUSer;
         }
         //Deleting Section
@@ -105,6 +111,8 @@ namespace ECommerceApp.BL.Managers.AppUserManager
                 return null;
             }
             AppUserReadDto deletedUser = _mapper.Map<AppUserReadDto>(user);
+            await GetRole(user, deletedUser);
+
             return deletedUser;
         }
         //Updating section:
@@ -121,8 +129,27 @@ namespace ECommerceApp.BL.Managers.AppUserManager
             {
                 return null;
             }
+            var userClaims = await _usermanager.GetClaimsAsync(user);
+            await UpdateRole(user, userClaims[1], model.Role);
             AppUserReadDto updatedUser = _mapper.Map<AppUserReadDto>(user);
+            await GetRole(user, updatedUser);
             return updatedUser;
+        }
+        //Getting user role from his claims
+        public async Task GetRole(User user,AppUserReadDto model)
+        {
+            var claims = await _usermanager.GetClaimsAsync(user);
+            var role = claims.Select(e => e.Value).ToList();
+            model.Role = role[1].ToString();
+        }
+        //Updating user claim
+        public async Task UpdateRole(User user, Claim OldClaim, string NewRole)
+        {
+            if(NewRole=="Customer"||NewRole=="Admin")
+            {
+                Claim myClaim = new Claim(ClaimTypes.Role, NewRole);
+                await _usermanager.ReplaceClaimAsync(user, OldClaim, myClaim);
+            }
         }
     }
 }

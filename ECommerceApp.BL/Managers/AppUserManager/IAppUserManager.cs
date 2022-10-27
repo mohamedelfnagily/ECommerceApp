@@ -3,6 +3,7 @@ using ECommerceApp.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,5 +23,9 @@ namespace ECommerceApp.BL.Managers.AppUserManager
         Task<AppUserReadDto> DeleteUser(string id);
         //update existing user
         Task<AppUserReadDto> UpdateUser(AppUserUpdateDto model,string id);
+        //Getting user role
+        Task GetRole(User user, AppUserReadDto model);
+        //Updating user Role Claim
+        Task UpdateRole(User user, Claim OldClaim, string NewRole);
     }
 }
