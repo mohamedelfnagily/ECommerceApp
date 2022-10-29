@@ -21,7 +21,7 @@ namespace ECommerceApp.DAL.Data.Context
             builder.Entity<Order>().Property(p => p.Date).HasDefaultValueSql("GETDATE()");
 
             builder.Entity<CartProduct>().HasKey(e => new { e.productId, e.CartId });
-
+            builder.Entity<ChatMapper>().HasKey(d => new { d.UserId, d.ConnectionId });
         }
         public DbSet<User> Users => Set<User>();
         public DbSet<Cart> Carts => Set<Cart>();
@@ -29,5 +29,6 @@ namespace ECommerceApp.DAL.Data.Context
         public DbSet<Category> Categories => Set<Category>();
         public DbSet<Order> Orders => Set<Order>();
         public DbSet<CartProduct> CartProducts => Set<CartProduct>();
+        public DbSet<ChatMapper> chatMapper { get; set; }
     }
 }

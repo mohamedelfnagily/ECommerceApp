@@ -69,7 +69,8 @@ namespace ECommerceApp.BL.Managers.AuthManager
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier,user.Id),
-                new Claim(ClaimTypes.Role,"Customer")
+                new Claim(ClaimTypes.Role,"Customer"),
+                new Claim(ClaimTypes.Name,user.FirstName+' ' +user.LastName),
             };
             var result = await _usermanager.AddClaimsAsync(user, claims);
             if(!result.Succeeded)

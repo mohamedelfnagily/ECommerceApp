@@ -23,7 +23,7 @@ namespace ECommerceApp.API.Controllers
             var userData =await _manager.RegisterNewUSer(model);
             if(userData==null)
             {
-                return BadRequest();
+                return BadRequest(new {message="Email Already registered"});
             }
             return Ok(userData);
         }
