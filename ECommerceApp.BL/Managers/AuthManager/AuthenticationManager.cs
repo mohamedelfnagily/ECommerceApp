@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ECommerceApp.BL.DTOs.AuthDTOs;
+using ECommerceApp.BL.Email.Service;
 using ECommerceApp.BL.Helpers;
 using ECommerceApp.DAL.Data.Models;
 using Microsoft.AspNetCore.Identity;
@@ -21,11 +22,13 @@ namespace ECommerceApp.BL.Managers.AuthManager
         private UserManager<User> _usermanager;
         private IConfiguration _config;
         private readonly IMapper _mapper;
-        public AuthenticationManager(UserManager<User> usermanager,IConfiguration config,IMapper mapper)
+        private readonly IEmailService _emailservice;
+        public AuthenticationManager(UserManager<User> usermanager,IConfiguration config,IMapper mapper,IEmailService serv)
         {
             _usermanager = usermanager;
             _config = config;
             _mapper = mapper;
+            _emailservice = serv;   
         }
 
         public string GenerateToken(IEnumerable<Claim> myClaims, SigningCredentials credentials)
@@ -80,6 +83,7 @@ namespace ECommerceApp.BL.Managers.AuthManager
             }
             myUserData.Token = GenerateToken(claims, JWT.getCredentials(_config));
             myUserData.ExpiryDuration = JWT.GetExpiryDuration(_config);
+            await _emailservice.SendEmailAsync(model.Email, "Registeration Confirmed!", "Welcome to our website");
             return myUserData;
         }
     }

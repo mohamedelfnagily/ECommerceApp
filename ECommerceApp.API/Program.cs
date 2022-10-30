@@ -1,4 +1,6 @@
 using ECommerceApp.BL.AutoMapper;
+using ECommerceApp.BL.Email.Service;
+using ECommerceApp.BL.Email.Settings;
 using ECommerceApp.BL.Helpers;
 using ECommerceApp.BL.Managers.AppUserManager;
 using ECommerceApp.BL.Managers.AuthManager;
@@ -20,6 +22,11 @@ namespace ECommerceApp.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            #region Email Configuration
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("MailSettings"));
+            builder.Services.AddTransient<IEmailService, EmailService>();
+
+            #endregion
             #region SignalR Configuration
             builder.Services.AddSignalR();
             #region Cors
